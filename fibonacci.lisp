@@ -86,3 +86,41 @@
   generator for the Fibonacci sequence."
 
   (memoized-recursive-fibonacci n))
+
+
+(defun recursive-extended-fibonacci (m n)
+
+  "We create a simple extension to the classical Fibonacci sequence by allowing
+  ourselves to specify a differing count of previous values to sum together in
+  order to produce the next value in the sequence.  The classical Fibonacci
+  sequence is therefore where m=2."
+
+  (assert (nonnegative-integer? m))
+  (assert (nonnegative-integer? n))
+  (cond ((= m 0) 0) ; Fib(0,n) = 0 for all n.
+        ((= n 0) 0) ; Fib(m,0) = 0 for all m.
+        ((= m 1) 1) ; Fib(1,n) = 1 for all n > 0.
+        ((<= n m) 1) ; Fib(m,n) = 1 for all n in [1,m].
+        (t (sum (loop for i from (- n m) to (1- n) collect i) ; The general case.
+                :key (curry #'recursive-extended-fibonacci m)))))
+
+
+;; This is an invariant stating that the classical Fibonacci sequence is the
+;; same as the extended Fibonacci sequence of order 2, testing F(0) ... F(20).
+(loop for n from 0 to 20
+      do (assert (= (fibonacci n)
+                    (recursive-extended-fibonacci 2 n))))
+
+
+;; This is an invariant stating the hard-coded values for some of m=3.
+(loop for n from 0 to 10
+      and f3n in '(0 1 1 1 3 5 9 17 31 57 105)
+      do (assert (= f3n (recursive-extended-fibonacci 3 n))))
+
+
+(defun extended-fibonacci (m n)
+
+  "This function points to the current best general implementation of a
+  generator for the extended Fibonacci sequence."
+
+  (recursive-extended-fibonacci m n))
