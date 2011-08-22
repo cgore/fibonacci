@@ -36,16 +36,53 @@
 (use-package :utilities)
 
 
-(defun simple-recursive-fibonacci (n)
+(defun recursive-fibonacci (n)
 
   "This is a super-simple recursive definition of the Fibonacci sequence.  This
   function definition is basically an exact translation of the standard form of
   the definition of the Fibonacci sequence itself.  This approach becomes quite
-  slow for me around F(50) on an Intel Core 2 Duo."
+  slow for me around Fib(50) on an Intel Core 2 Duo."
 
   (assert (nonnegative-integer? n))
   (cond ((= n 0) 0)
         ((= n 1) 1)
         ((= n 2) 1)
-        (t (+ (fibonacci (- n 1))
-              (fibonacci (- n 2))))))
+        (t (+ (recursive-fibonacci (- n 1))
+              (recursive-fibonacci (- n 2))))))
+
+
+;; This is a simple invariant specifying hard-coded values for F(0) ... F(20).
+(loop for n from 0 to 20
+      and fn in '(0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584
+                  4181 6765)
+      do (assert (= fn (recursive-fibonacci n))))
+
+
+(let ((memory (loop for n from 0 to 10 collect (recursive-fibonacci n))))
+  (defun memoized-recursive-fibonacci (n)
+
+    "This is a simple improvement over the recursive-fibonacci function in that
+    it memoizes the numbers in the sequence.  This should turn the time
+    complexity from exponential to nearly linear.  I can quickly calculate to
+    well past Fib(50,000) with this function on an Intel Core 2 Duo."
+
+    (assert (nonnegative-integer? n))
+    (while (< (1- (length memory)) n)
+           (nconc memory
+                  (list (+ (nth (- (length memory) 1) memory)
+                           (nth (- (length memory) 2) memory)))))
+    (nth n memory)))
+
+
+;; This is a simple invariant for Fib(0) ... Fib(20).
+(loop for n from 0 to 20
+      do (assert (= (recursive-fibonacci n)
+                    (memoized-recursive-fibonacci n))))
+
+
+(defun fibonacci (n)
+
+  "This function points to the current best general implementation of a
+  generator for the Fibonacci sequence."
+
+  (memoized-recursive-fibonacci n))
