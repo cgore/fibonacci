@@ -1,0 +1,13 @@
+# /bin/sh
+
+title=fibonacci
+
+latex $title.latex &&
+latex $title.latex &&
+bibtex $title &&
+bibtex $title &&
+latex $title.latex &&
+latex $title.latex &&
+latex $title.latex &&
+dvips $title.dvi -o &&
+ps2pdf $title.ps

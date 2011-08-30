@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\usepackage{bookman}
+\usepackage{url}
+\DeclareMathAlphabet{\mathpzc}{OT1}{pzc}{m}{it}
+\bibliographystyle{acm}
+
+\title{Extended Fibonacci Sequences}
+\author{Christopher Mark Gore\\
+  \texttt{cgore@cgore.com}\\
+  \texttt{http://www.cgore.com}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{The Classical Fibonacci Sequence \cite{MathWorld:FibonacciNumber}}
+
+The Fibonacci numbers are the sequence of numbers
+$\{F_n\}_{n=1}^\infty$
+defined by the linear recurrence equation
+$$F_n = F_{n-1} + F_{n-2}$$
+with $F_1 = F_2 = 1$, and conventionally defining $F_0 = 0$.
+
+We can thus calculate some of the first few Fibonacci numbers as 0, 1, 1, 2,
+3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1,597, 2,584, 4,181,
+6,765, 10,946, 17,711, 28,657, 46,368, 75,025, 121,393, 196,418, 317,811,
+514,229, 832,040, 1,346,269, and so forth.
+
+\section{Extending the Sequence}
+
+There are several extensions that obviously arise from this definition of the
+Fibonacci numbers.  A commonly-known example are the Fibonacci polynomials,
+\cite{MathWorld:FibonacciPolynomial}, which extend the Fibonacci sequence into
+the reals.
+
+One in specific we are interested in is as such.  We can view the Fibonacci
+numbers as merely the summation of the previous terms.  In the traditional form
+we are summing the last two, but there is no reason we can't extend this
+concept for any arbitrary non-negative integer.
+
+Thus, our extended Fibonacci sequence of numbers
+$\{F_{m,n}\}_{m,n=1}^\infty$
+defined by the linear recurrence relation
+$$F_{m,n} = \sum_{i=1}^m F_{m,n-i}$$
+with $F_{m,j} = 1 \forall j \in [1,m]$,
+and conventionally defining $F_{m,0}=0 \forall m$.
+
+We can see that the traditional Fibonacci sequence $F_n$ is $F_{2,n}$, since we
+sum only the previous two elements of the sequence. $F_{0,n}$ is quite
+uninteresting, since the only reasonable convention would be that
+$$F_{0,n} = 0 \forall n$$
+Similarly, $F_{1,n}$ is also quite uninteresting, as it would be
+$$F_{1,n} = 1 \forall n$$
+
+\subsection{$F_{3,n}$}
+
+The first such sequence of interest, other than the classical Fibonacci sequence,
+
+
+\bibliography{fibonacci} % XXX: Why aren't the other fields showing?
+
+\end{document}
