@@ -32,7 +32,7 @@
 ;;;; POSSIBILITY OF SUCH DAMAGE.
 
 
-(load "utilities")
+(load "utilities/utilities")
 (use-package :utilities)
 
 

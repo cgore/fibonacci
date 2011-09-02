@@ -2,3 +2,5 @@
 *.sw[nop]
 *.aux
 *.log
+*.bbl
+*.blg
